@@ -1,0 +1,23 @@
+groups:
+  - name: flask-app-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: |
+          increase(flask_request_total{status!~"2.."}[5m])
+            /
+          increase(flask_request_total[5m]) > 0.01
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate"
+          description: "More than 1% of requests failed in the last 5 minutes"
+      - alert: HighLatency
+        expr: |
+          histogram_quantile(0.95, sum(rate(flask_request_latency_seconds_bucket[5m])) by (le, method, endpoint, status)) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request latency"
+          description: "95th percentile of request duration is greater than 500ms in the last 5 minutes"
