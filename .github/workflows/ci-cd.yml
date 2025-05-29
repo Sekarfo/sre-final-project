@@ -44,7 +44,9 @@ jobs:
           username: sekarfo225
           password: Kopilka09
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t yourdockerhubusername/flask-app:latest ./app
-          docker push yourdockerhubusername/flask-app:latest
+      - name: Build the Docker image
+        run: docker build -t sekarfo225/flask-app:latest ./app
+
+      - name: Push the Docker image
+        run: docker push sekarfo225/flask-app:latest
+

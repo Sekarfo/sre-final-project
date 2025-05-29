@@ -14,14 +14,15 @@ metrics = PrometheusMetrics(app, path='/metrics')
 init_metrics()
 metrics.info('app_info', 'Application info', version='1.0.0', environment='development')
 
-# PostgreSQL configuration (change these)
+
 DB_CONFIG = {
-    'host': 'host.docker.internal',            # use 'localhost' if running without Docker
-    'port': 5433,
+    'host': 'host.docker.internal',
+    'port': 5432,
+    'dbname': 'postgres',
     'user': 'postgres',
-    'password': '0000',
-    'dbname': 'postgres'
+    'password': '0000'
 }
+
 
 def get_db_connection(retries=10, delay=5):
     attempt = 0
